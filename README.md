@@ -15,17 +15,20 @@ Open `index.html` in a browser to see the example.
 
 `myGraphData` follows `docs/DATA-SCHEMA.md`. To start from a spreadsheet, see the CSV section there.
 
-## Use it with GitHub Copilot
+## Use it with GitHub Copilot in VS Code
 
-Give Copilot these files as context (attach them in chat, or copy them into your own repository at the same paths):
+Copy these into the root of your work repository at the same paths (VS Code picks them up from there):
 
-| File | What it gives Copilot |
+| File | What VS Code does with it |
 |---|---|
-| `.github/copilot-instructions.md` | How to restyle any diagram to this look (Copilot reads it automatically when it sits in a repository's `.github` folder) |
-| `docs/DESIGN-SPEC.md` | The ten look rules, colour tokens, and how to carry the look into Mermaid, draw.io, Visio or Power BI |
-| `docs/DATA-SCHEMA.md` | The data shape to convert a diagram into |
-| `src/neural-graph.js`, `src/neural-graph.css` | The reference build to reuse for web pages |
-| `.github/prompts/restyle-diagram.prompt.md` | A ready prompt: "restyle this diagram" |
+| `.github/copilot-instructions.md` | Added to every Copilot chat in that workspace automatically |
+| `.github/instructions/diagrams.instructions.md` | Added automatically when Copilot works on diagram files (Mermaid, draw.io, SVG, HTML, JSON, CSV) |
+| `.github/prompts/restyle-diagram.prompt.md` | Type `/restyle-diagram` in Copilot chat, then attach or name your diagram |
+| `docs/DESIGN-SPEC.md`, `docs/DATA-SCHEMA.md` | The look rules and data shape the files above point to |
+| `src/neural-graph.js`, `src/neural-graph.css` | The working renderer, for diagrams that live on a web page |
+
+Keep the paths as they are: the instruction and prompt files link to the docs and source by relative path.
+If `copilot-instructions.md` is not picked up, check that the VS Code setting `github.copilot.chat.codeGeneration.useInstructionFiles` is on.
 
 ## Files
 
@@ -36,7 +39,7 @@ data/example.json, example.js      sample data (example.js is the same data as a
 docs/DESIGN-SPEC.md                look rules and tokens
 docs/DATA-SCHEMA.md                data shape
 tools/csv_to_graph.py              spreadsheet to JSON
-.github/                           Copilot instructions and prompt
+.github/                           VS Code Copilot instructions, scoped instructions and prompt
 ```
 
 ## Credits
