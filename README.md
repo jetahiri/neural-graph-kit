@@ -17,18 +17,9 @@ Open `index.html` in a browser to see the example.
 
 ## Use it with GitHub Copilot in VS Code
 
-Copy these into the root of your work repository at the same paths (VS Code picks them up from there):
+Only one file is needed: `.github/copilot-instructions.md`. Put it at the same path in your project and VS Code adds it to every Copilot chat there. It holds the whole look (layout, colours, the light effect, interaction, other tools), so Copilot writes the diagram code itself. Then ask: "Restyle this diagram to the neural graph look", with your diagram attached.
 
-| File | What VS Code does with it |
-|---|---|
-| `.github/copilot-instructions.md` | Added to every Copilot chat in that workspace automatically |
-| `.github/instructions/diagrams.instructions.md` | Added automatically when Copilot works on diagram files (Mermaid, draw.io, SVG, HTML, JSON, CSV) |
-| `.github/prompts/restyle-diagram.prompt.md` | Type `/restyle-diagram` in Copilot chat, then attach or name your diagram |
-| `docs/DESIGN-SPEC.md`, `docs/DATA-SCHEMA.md` | The look rules and data shape the files above point to |
-| `src/neural-graph.js`, `src/neural-graph.css` | The working renderer, for diagrams that live on a web page |
-
-Keep the paths as they are: the instruction and prompt files link to the docs and source by relative path.
-If `copilot-instructions.md` is not picked up, check that the VS Code setting `github.copilot.chat.codeGeneration.useInstructionFiles` is on.
+Everything else in this repo is a working reference (`index.html` demo, `src/` renderer, `docs/` long-form spec) and is optional.
 
 ## Files
 
@@ -39,7 +30,7 @@ data/example.json, example.js      sample data (example.js is the same data as a
 docs/DESIGN-SPEC.md                look rules and tokens
 docs/DATA-SCHEMA.md                data shape
 tools/csv_to_graph.py              spreadsheet to JSON
-.github/                           VS Code Copilot instructions, scoped instructions and prompt
+.github/copilot-instructions.md    the one file Copilot needs
 ```
 
 ## Credits
