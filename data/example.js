@@ -1,0 +1,147 @@
+window.GRAPH_DATA = {
+  "title": "Example data platform",
+  "groups": [
+    {
+      "id": "sources",
+      "label": "Sources"
+    },
+    {
+      "id": "pipeline",
+      "label": "Pipeline"
+    },
+    {
+      "id": "warehouse",
+      "label": "Warehouse"
+    },
+    {
+      "id": "reporting",
+      "label": "Reporting"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "crm",
+      "label": "Customer system",
+      "kind": "Source database",
+      "group": "sources",
+      "status": "ok",
+      "description": "The system of record for customer details."
+    },
+    {
+      "id": "orders",
+      "label": "Order feed",
+      "kind": "Daily file drop",
+      "group": "sources",
+      "status": "warn",
+      "description": "A file that lands every night. Last night's file arrived late."
+    },
+    {
+      "id": "ref",
+      "label": "Reference lists",
+      "kind": "Spreadsheet",
+      "group": "sources",
+      "status": "ok",
+      "description": "Lookup values kept by hand."
+    },
+    {
+      "id": "ingest",
+      "label": "Nightly load",
+      "kind": "Scheduled job",
+      "group": "pipeline",
+      "status": "ok",
+      "description": "Copies each source into the staging area."
+    },
+    {
+      "id": "clean",
+      "label": "Cleaning step",
+      "kind": "SQL procedure",
+      "group": "pipeline",
+      "status": "ok",
+      "description": "Removes duplicates and fixes formats."
+    },
+    {
+      "id": "monitor",
+      "label": "Freshness check",
+      "kind": "Monitor",
+      "group": "pipeline",
+      "status": "idle",
+      "description": "Flags any table that has not refreshed in a day."
+    },
+    {
+      "id": "stage",
+      "label": "Staging tables",
+      "kind": "Database schema",
+      "group": "warehouse",
+      "status": "ok",
+      "description": "Clean copies, one table per source."
+    },
+    {
+      "id": "model",
+      "label": "Reporting model",
+      "kind": "Database views",
+      "group": "warehouse",
+      "status": "error",
+      "description": "Joined, business-ready views. One view failed to build this morning."
+    },
+    {
+      "id": "dash",
+      "label": "Weekly dashboard",
+      "kind": "Report",
+      "group": "reporting",
+      "status": "ok",
+      "description": "The summary leadership reads every Monday."
+    },
+    {
+      "id": "extract",
+      "label": "Partner extract",
+      "kind": "Outbound file",
+      "group": "reporting",
+      "status": "ok",
+      "description": "A file sent to a partner each week."
+    }
+  ],
+  "edges": [
+    {
+      "from": "crm",
+      "to": "ingest",
+      "label": "nightly copy"
+    },
+    {
+      "from": "orders",
+      "to": "ingest",
+      "label": "file pickup"
+    },
+    {
+      "from": "ref",
+      "to": "ingest"
+    },
+    {
+      "from": "ingest",
+      "to": "clean"
+    },
+    {
+      "from": "clean",
+      "to": "stage",
+      "label": "loads clean rows"
+    },
+    {
+      "from": "stage",
+      "to": "model",
+      "label": "builds views"
+    },
+    {
+      "from": "model",
+      "to": "dash"
+    },
+    {
+      "from": "model",
+      "to": "extract"
+    },
+    {
+      "from": "monitor",
+      "to": "stage",
+      "type": "oversee",
+      "label": "checks age"
+    }
+  ]
+};
